@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Email Adder Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header with Logo -->
+    <header class="app-header">
+      <div class="logo">
+        <svg viewBox="0 0 128 128" width="32" height="32">
+          <defs>
+            <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#4285f4"/>
+              <stop offset="100%" style="stop-color:#34a853"/>
+            </linearGradient>
+          </defs>
+          <rect width="128" height="128" rx="24" fill="url(#bg)"/>
+          <text x="64" y="80" font-size="60" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-weight="bold">@</text>
+        </svg>
+        <div class="title-group">
+          <h1>Auto Email Adder</h1>
+          <span class="version">Pro v1.0</span>
+        </div>
+      </div>
+      <div class="status-badge" id="status">
+        <span class="status-dot"></span>
+        <span class="status-text">Ready</span>
+      </div>
+    </header>
+
+    <!-- Quick Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-value" id="queueCount">0</span>
+        <span class="stat-label">Queued</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="addedCount">0</span>
+        <span class="stat-label">Added</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="historyCount">0</span>
+        <span class="stat-label">History</span>
+      </div>
+    </div>
+
+    <!-- Email Input Section -->
+    <section class="section-card input-card">
+      <div class="section-header">
+        <h2>Add Emails</h2>
+        <span class="hint">Paste or type emails</span>
+      </div>
+      <div class="input-wrapper">
+        <textarea 
+          id="emailInput" 
+          placeholder="email1@example.com, email2@example.com&#10;email3@example.com"
+          rows="5"
+        ></textarea>
+        <div class="input-meta">
+          <span id="emailCount">0 emails detected</span>
+          <kbd>Ctrl+Enter</kbd>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button id="addBtn" class="btn btn-primary btn-lg">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+          </svg>
+          Add to Queue
+        </button>
+        <button id="clearBtn" class="btn btn-text">Clear</button>
+      </div>
+    </section>
+
+    <!-- Queue Section -->
+    <section class="section-card queue-card">
+      <div class="section-header">
+        <h2>Email Queue</h2>
+        <button id="clearQueueBtn" class="btn btn-icon" title="Clear Queue">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="email-list-container" id="emailListContainer">
+        <ul id="emailList" class="email-list"></ul>
+        <div class="empty-state" id="emptyQueue">
+          <svg width="48" height="48" viewBox="0 0 16 16" fill="#ccc">
+            <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm-1.17-.437A1.5 1.5 0 0 1 4.98 3h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
+          </svg>
+          <p>No emails in queue</p>
+          <span>Add emails above to get started</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section class="section-card settings-card">
+      <div class="section-header toggle-header" id="settingsToggle">
+        <h2>Settings</h2>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+        </svg>
+      </div>
+      <div class="settings-content" id="settingsContent">
+        <div class="setting-item">
+          <div class="setting-info">
+            <label for="delayInput">Delay between emails</label>
+            <span class="setting-desc">Time to wait before adding next email</span>
+          </div>
+          <div class="setting-control">
+            <input type="number" id="delayInput" value="200" min="50" max="5000" step="50">
+            <span class="unit">ms</span>
+          </div>
+        </div>
+        <div class="setting-item toggle-item">
+          <div class="setting-info">
+            <label for="autoRemoveCheck">Auto-remove after adding</label>
+            <span class="setting-desc">Remove emails from queue once added</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="autoRemoveCheck" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item toggle-item">
+          <div class="setting-info">
+            <label for="dedupeCheck">Remove duplicates</label>
+            <span class="setting-desc">Prevent duplicate emails in queue</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="dedupeCheck" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="section-card history-card">
+      <div class="section-header toggle-header" id="historyToggle">
+        <h2>Recently Added</h2>
+        <div class="header-actions">
+          <button id="clearHistoryBtn" class="btn btn-text-sm">Clear All</button>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="history-content collapsed" id="historyContent">
+        <ul id="historyList" class="history-list"></ul>
+        <div class="empty-state-small" id="emptyHistory">
+          <p>No history yet</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="feature-badges">
+        <span class="badge">1 Click = 1 Email</span>
+        <span class="badge">Auto-Compose</span>
+      </div>
+      <p class="footer-text">Click Compose in Gmail to auto-add emails</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

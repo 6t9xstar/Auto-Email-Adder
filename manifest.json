@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Email Adder",
+  "version": "1.0.0",
+  "description": "Auto-add emails to Gmail recipients when composing",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
