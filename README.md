@@ -115,4 +115,4 @@ If you encounter issues, please check:
 
 **Version**: 1.0.0  
 **Created for**: Gmail Auto Email Adding
-**Developer**: ApexSofteck"# Auto-Email-Adder" 
+**Developer**: ApexSofteck
